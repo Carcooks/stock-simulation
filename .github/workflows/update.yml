@@ -6,4 +6,4 @@ jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -X POST https://stock-simulator.vercel.app/api/update-prices
+      - run: curl -X POST https://stock-simulator-dgmbmjvcn-carcooks-projects.vercel.app/api/update-prices
