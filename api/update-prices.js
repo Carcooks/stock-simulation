@@ -1,8 +1,8 @@
 const axios = require('axios');
 require('dotenv').config();
 
-const PROJECT_ID = process.env.FIRESTORE_PROJECT_ID || "knu-dent-stock-exchange-84d53";
-const API_KEY = process.env.GOOGLE_API_KEY || "AIzaSyAyh7iymvLYejCLrBG_iIVX2_dYBlHSZ98";
+const PROJECT_ID = process.env.FIRESTORE_PROJECT_ID;
+const API_KEY = process.env.GOOGLE_API_KEY;
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
 
 module.exports = async (req, res) => {
