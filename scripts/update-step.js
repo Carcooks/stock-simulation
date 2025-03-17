@@ -7,17 +7,29 @@ const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/dat
 async function updateStep() {
   try {
     const configUrl = `${BASE_URL}/config/stockState`;
+    console.log('Fetching current step from:', configUrl);
     const { data } = await axios.get(`${configUrl}?key=${API_KEY}`);
+    console.log('Current data:', data);
     const currentStep = parseInt(data.fields.currentStep?.integerValue || "0");
-    const newStep = (currentStep + 1) % 15; // 0~14 반복
+    const newStep = (currentStep + 1) % 15;
 
-    await axios.patch(`${configUrl}?key=${API_KEY}`, {
-      fields: { currentStep: { integerValue: newStep.toString() } }
-    }, { headers: { 'Content-Type': 'application/json' } });
+    const payload = {
+      fields: {
+        currentStep: { integerValue: newStep.toString() }
+      }
+    };
+    console.log('PATCH payload:', payload);
+
+    await axios.patch(`${configUrl}?key=${API_KEY}`, payload, {
+      headers: { 'Content-Type': 'application/json' }
+    });
 
     console.log(`Step updated to ${newStep}`);
   } catch (error) {
-    console.error('Error:', error.message, error.response?.data);
+    console.error('Error:', error.message);
+    if (error.response) {
+      console.error('Response data:', error.response.data);
+    }
     process.exit(1);
   }
 }
