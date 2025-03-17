@@ -4,8 +4,8 @@
     { "src": "api/**/*.js", "use": "@vercel/node" }
   ],
   "routes": [
+    { "src": "/api/skill", "dest": "/api/skill.js" },
     { "src": "/api/update-prices", "dest": "/api/update-prices.js" },
-    { "src": "/api/get-all-prices", "dest": "/api/get-all-prices.js" },
     { "src": "/(.*)", "dest": "/api/index.js" }
   ]
 }
