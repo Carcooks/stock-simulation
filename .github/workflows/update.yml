@@ -1,0 +1,9 @@
+name: Update Stock Prices
+on:
+  schedule:
+    - cron: '0 0 9,13,17 * * *' # UTC 9시, 13시, 17시
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - run: curl -X POST https://stock-simulator-rbf0fffmx-carcooks-projects.vercel.app/
