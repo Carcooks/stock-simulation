@@ -14,13 +14,28 @@ module.exports = async (req, res) => {
     }
 
     if (utterance === '시작') {
-      const userCollectionUrl = `${BASE_URL}/users`;
+      const userDocUrl = `${BASE_URL}/users/${user.id}`; // 문서 경로
+      const userCollectionUrl = `${BASE_URL}/users`;     // 컬렉션 경로
       const payload = {
         fields: { balance: { integerValue: "5000000" } }
       };
-      console.log('Request:', { method: 'POST', url: userCollectionUrl, data: payload });
 
-      const response = await axios.post(`${userCollectionUrl}?key=${API_KEY}&documentId=${user.id}`, payload, {
+      let docExists = false;
+      try {
+        await axios.get(`${userDocUrl}?key=${API_KEY}`);
+        docExists = true;
+      } catch (error) {
+        if (error.response?.status !== 404) throw error;
+      }
+
+      const method = docExists ? 'patch' : 'post';
+      const url = docExists ? userDocUrl : `${userCollectionUrl}?documentId=${user.id}`;
+      console.log('Request:', { method, url, data: payload });
+
+      const response = await axios({
+        method,
+        url: `${url}?key=${API_KEY}`,
+        data: payload,
         headers: { 'Content-Type': 'application/json' }
       });
       console.log('Response:', response.data);
