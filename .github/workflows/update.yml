@@ -1,10 +1,27 @@
-name: Update Stock Prices
+name: Update Current Step
 on:
   schedule:
-    - cron: '0 0 9,13,17 * * *'
+    - cron: '0 0 * * *'  # KST 09:00 (UTC 00:00)
+    - cron: '0 5 * * *'  # KST 14:00 (UTC 05:00)
+    - cron: '0 8 * * *'  # KST 17:00 (UTC 08:00)
+  workflow_dispatch:  # 수동 실행 가능
 jobs:
   update:
     runs-on: ubuntu-latest
     steps:
-      - run: curl -X POST https://stock-simulator-dgmbmjvcn-carcooks-projects.vercel.app/api/update-prices
- a38ccb06be214a50f709d9b475bbc91460eebab3
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install axios
+
+      - name: Update Firestore currentStep
+        env:
+          FIRESTORE_PROJECT_ID: ${{ secrets.FIRESTORE_PROJECT_ID }}
+          GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
+        run: node scripts/update-step.js
