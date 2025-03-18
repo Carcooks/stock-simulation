@@ -23,6 +23,8 @@ jobs:
       - name: Check Secrets Availability
         run: |
           echo "Available secrets: ${{ toJSON(secrets) }}"
+          echo "FIRESTORE_PROJECT_ID from secrets: ${{ secrets.FIRESTORE_PROJECT_ID }}"
+          echo "GOOGLE_API_KEY from secrets: ****"
 
       - name: Update Firestore currentStep
         env:
