@@ -6,6 +6,10 @@ const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/dat
 
 async function updateStep() {
   try {
+    console.log('PROJECT_ID:', PROJECT_ID);  // 디버깅
+    console.log('API_KEY:', API_KEY);        // 디버깅
+    if (!PROJECT_ID || !API_KEY) throw new Error('Missing env vars');
+
     const configUrl = `${BASE_URL}/config/stockState`;
     console.log('Fetching current step from:', configUrl);
     const { data } = await axios.get(`${configUrl}?key=${API_KEY}`);
