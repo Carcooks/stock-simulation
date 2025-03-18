@@ -25,5 +25,6 @@ jobs:
           FIRESTORE_PROJECT_ID: ${{ secrets.FIRESTORE_PROJECT_ID }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
-          echo "FIRESTORE_PROJECT_ID=$FIRESTORE_PROJECT_ID"  # 디버깅용
+          echo "FIRESTORE_PROJECT_ID=$FIRESTORE_PROJECT_ID"
+          echo "GOOGLE_API_KEY=****"  # 보안 마스킹
           node scripts/update-step.js
