@@ -1,9 +1,11 @@
 const axios = require('axios');
 
-const PROJECT_ID = process.env.FIRESTORE_PROJECT_ID;
-const API_KEY = process.env.GOOGLE_API_KEY;
-console.log('Environment - FIRESTORE_PROJECT_ID:', process.env.FIRESTORE_PROJECT_ID);
-console.log('Environment - GOOGLE_API_KEY:', process.env.GOOGLE_API_KEY ? '****' : 'undefined');
+console.log('Process env - FIRESTORE_PROJECT_ID:', process.env.FIRESTORE_PROJECT_ID);
+console.log('Process env - GOOGLE_API_KEY:', process.env.GOOGLE_API_KEY ? '****' : 'undefined');
+
+const PROJECT_ID = process.env.FIRESTORE_PROJECT_ID || 'knu-dent-stock-exchange-84d53'; // 임시 하드코딩
+const API_KEY = process.env.GOOGLE_API_KEY || 'AIzaSyAyh7iymvLYejCLrBG_iIVX2_dYBlHSZ98'; // 임시 하드코딩
+
 if (!PROJECT_ID || !API_KEY) throw new Error('Missing env vars');
 
 const BASE_URL = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
@@ -33,7 +35,7 @@ async function updateStep() {
     if (error.response) {
       console.error('Response data:', error.response.data);
     }
-    throw error; // 오류를 상위로 전달
+    throw error;
   }
 }
 
