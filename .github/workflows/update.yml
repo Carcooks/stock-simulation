@@ -20,11 +20,19 @@ jobs:
       - name: Install dependencies
         run: npm install axios
 
+      - name: Check Secrets Availability
+        run: |
+          echo "Available secrets: ${{ toJSON(secrets) }}"
+
       - name: Update Firestore currentStep
         env:
           FIRESTORE_PROJECT_ID: ${{ secrets.FIRESTORE_PROJECT_ID }}
           GOOGLE_API_KEY: ${{ secrets.GOOGLE_API_KEY }}
         run: |
-          echo "FIRESTORE_PROJECT_ID=$FIRESTORE_PROJECT_ID"
-          echo "GOOGLE_API_KEY=****"  # 보안 마스킹
+          echo "Secrets check - FIRESTORE_PROJECT_ID: $FIRESTORE_PROJECT_ID"
+          echo "Secrets check - GOOGLE_API_KEY: ****"
+          if [ -z "$FIRESTORE_PROJECT_ID" ] || [ -z "$GOOGLE_API_KEY" ]; then
+            echo "Error: One or more environment variables are missing"
+            exit 1
+          fi
           node scripts/update-step.js
