@@ -1,11 +1,9 @@
-const express = require('express');
-require('dotenv').config();
-
-const app = express();
-app.use(express.json());
-
-app.get('/', (req, res) => {
-  res.json({ message: "Stock Simulator API is running!" });
-});
-
-module.exports = app;
+module.exports = async (req, res) => {
+  res.status(200).json({
+    message: '📈 주식 시뮬레이터 API 정상 작동 중!',
+    endpoints: [
+      '/api/skill',           // 카카오톡용
+      '/api/update-prices'    // step 증가용
+    ]
+  });
+};
