@@ -16,7 +16,7 @@ async function updateStep() {
     const { data } = await axios.get(`${BASE_URL}/config/stockState?key=${API_KEY}`);
     console.log('Current data:', data);
     const currentStep = parseInt(data.fields.currentStep?.integerValue || "0");
-    const newStep = (currentStep + 1) % 15;
+    const newStep = currentStep + 1;
 
     const payload = {
       fields: {
